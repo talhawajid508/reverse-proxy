@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  python-app:
+    container_name: python
+    build: 
+      context: ./python-app/
+    ports:
+      - "5000:5000"
+
+  node-app:
+    container_name: node
+    build:
+      context: ./node-app/
+    ports:
+      - "3000:3000"
+
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - "8081:80"
+    volumes:
+       - /home/hp/my_app/nginx/nginx.conf:/etc/nginx/nginx.conf
+      
+    depends_on:
+      - python-app
+      - node-app
+
+  
